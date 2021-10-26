@@ -7,13 +7,7 @@
   <title>Content Page</title>
 </head>
 <body>
-<h1>FIND OUT THE ANSWER TO YOUR QUESTION</h1>
-<h3>EIGHT BALL KNOWS ALL</h3>
-<form th:action="@{/ask}" method="post">
-  <label>Type the question:
-    <input type="text" name="question">
-  </label>
-  <button type="submit">ASK QUESTION</button>
-</form>
+<h1>The answer is: </h1>
+<p th:text="${answer}"></p>
 </body>
 </html>
