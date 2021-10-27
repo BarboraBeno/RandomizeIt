@@ -1,6 +1,7 @@
 package com.random.randomizeit.controllers;
 
 import com.random.randomizeit.exceptions.AnswerNotFoundException;
+import com.random.randomizeit.exceptions.QuestionIsRequiredException;
 import com.random.randomizeit.services.AnswerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,8 +30,8 @@ public class main {
 
   @PostMapping("/ask")
   public String answer(Model model,@RequestParam(name="question") String question)
-      throws AnswerNotFoundException {
-    model.addAttribute("answer",answerService.answer(question));
+      throws AnswerNotFoundException, QuestionIsRequiredException {
+    model.addAttribute("answer", answerService.answer(question));
     return "redirect:/answer";
   }
 

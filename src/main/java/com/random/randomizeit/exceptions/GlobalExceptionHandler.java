@@ -15,4 +15,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     return new ResponseEntity<>(new ErrorDTO(e.getMessage()), HttpStatus.NOT_FOUND);
   }
 
+  @ExceptionHandler(QuestionIsRequiredException.class)
+  public ResponseEntity<Object> QuestionRequired(QuestionIsRequiredException e){
+    return new ResponseEntity<>(new ErrorDTO(e.getMessage()),HttpStatus.BAD_REQUEST);
+  }
+
 }

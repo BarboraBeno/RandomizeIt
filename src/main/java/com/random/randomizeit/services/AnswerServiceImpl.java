@@ -1,6 +1,7 @@
 package com.random.randomizeit.services;
 
 import com.random.randomizeit.exceptions.AnswerNotFoundException;
+import com.random.randomizeit.exceptions.QuestionIsRequiredException;
 import com.random.randomizeit.models.Answer;
 import com.random.randomizeit.repositories.AnswerRepository;
 import java.util.Optional;
@@ -17,7 +18,7 @@ public class AnswerServiceImpl implements AnswerService{
   }
 
   @Override
-  public String answer(String question) throws AnswerNotFoundException {
+  public String answer(String question) throws AnswerNotFoundException, QuestionIsRequiredException {
 
     Random random = new Random();
     Long n = (long) random.nextInt(10);
@@ -26,6 +27,10 @@ public class AnswerServiceImpl implements AnswerService{
 
     if(optionalAnswer.isEmpty()){
       throw new AnswerNotFoundException("Answer wasnt found.");
+    }
+
+    if(question.equals("") || question == null){
+      throw  new QuestionIsRequiredException("Question must not be empty.");
     }
 
     return optionalAnswer.get().getAnswer();

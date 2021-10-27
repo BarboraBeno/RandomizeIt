@@ -20,4 +20,9 @@ public class Answer {
   private Long id;
   private String answer;
 
+
+  @Override
+  public String toString() {
+    return answer;
+  }
 }
