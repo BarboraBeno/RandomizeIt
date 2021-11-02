@@ -2,14 +2,22 @@ package com.random.randomizeit.controllers;
 
 import com.random.randomizeit.exceptions.AnswerNotFoundException;
 import com.random.randomizeit.exceptions.QuestionIsRequiredException;
+import com.random.randomizeit.models.Answer;
+import com.random.randomizeit.models.AnswerDTO;
+import com.random.randomizeit.models.QuestionDTO;
 import com.random.randomizeit.services.AnswerService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class main {
 
   private final AnswerService answerService;
@@ -18,21 +26,10 @@ public class main {
     this.answerService = answerService;
   }
 
-  @GetMapping("/ask")
-  public String askMe(){
-    return "index";
-  }
-
-  @GetMapping("/answer")
-  public String answer(){
-    return "answer";
-  }
-
   @PostMapping("/ask")
-  public String answer(Model model,@RequestParam(name="question") String question)
+  public ResponseEntity askQuestion(@RequestBody QuestionDTO question)
       throws AnswerNotFoundException, QuestionIsRequiredException {
-    model.addAttribute("answer", answerService.answer(question));
-    return "redirect:/answer";
+    return ResponseEntity.status(HttpStatus.OK).body(new AnswerDTO(question.getQuestion(),
+        answerService.answer(question.getQuestion())));
   }
-
 }
